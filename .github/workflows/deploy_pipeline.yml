@@ -50,7 +50,7 @@ jobs:
       - name: Azure CLI Login (QA)
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_ACCESS_KEY_STAGING }}
+          creds: ${{ secrets.AZURE_ACCESS_KEY_QA }}
 
       - name: Upload to QA Blob Storage
         run: |
