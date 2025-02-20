@@ -16,16 +16,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Azure CLI Login (Dev)
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_ACCESS_KEY_DEV }}
-
       - name: Upload to Dev Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstoragedev \
-          --auth-mode key
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_DEV }}"
 
   approve-qa:
     name: ✅ Request QA Deployment Approval
@@ -47,16 +42,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Azure CLI Login (QA)
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_ACCESS_KEY_QA }}
-
       - name: Upload to QA Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstorageqa \
-          --auth-mode key
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_QA }}"
 
   approve-prod:
     name: ✅ Request Production Deployment Approval
@@ -78,13 +68,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Azure CLI Login (Prod)
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_ACCESS_KEY_PROD }}
-
       - name: Upload to Production Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstorageprod \
-          --auth-mode key
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_PROD }}"
