@@ -36,8 +36,7 @@ jobs:
   deploy-qa:
     name: 🚀 Deploy to QA
     runs-on: ubuntu-latest
-    needs: approve-qa
-    if: github.ref == 'refs/heads/qa'
+    needs: approve-qa   # ✅ This ensures QA runs after approval (no 'if' needed)
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -63,7 +62,6 @@ jobs:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
     needs: approve-prod
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
