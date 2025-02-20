@@ -24,7 +24,7 @@ jobs:
       - name: Upload to Dev Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
-          --account-name <dev-storage-account> \
+          --account-name rksstoragedev \
           --auth-mode key
 
   approve-qa:
@@ -55,7 +55,7 @@ jobs:
       - name: Upload to QA Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
-          --account-name <qa-storage-account> \
+          --account-name rksstorageqa \
           --auth-mode key
 
   approve-prod:
@@ -86,5 +86,5 @@ jobs:
       - name: Upload to Production Blob Storage
         run: |
           az storage blob upload-batch -d '$web' -s . \
-          --account-name <prod-storage-account> \
+          --account-name rksstorageprod \
           --auth-mode key
