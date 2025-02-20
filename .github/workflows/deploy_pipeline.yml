@@ -1,0 +1,90 @@
+name: Azure Blob Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+      - qa
+      - main
+
+jobs:
+  deploy-dev:
+    name: 🚀 Deploy to Development
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Azure CLI Login (Dev)
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_ACCESS_KEY_DEV }}
+
+      - name: Upload to Dev Blob Storage
+        run: |
+          az storage blob upload-batch -d '$web' -s . \
+          --account-name <dev-storage-account> \
+          --auth-mode key
+
+  approve-qa:
+    name: ✅ Request QA Deployment Approval
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+      url: https://portal.azure.com/
+    steps:
+      - name: Wait for QA Deployment Approval
+        run: echo "QA deployment approval required. Approve via GitHub Actions."
+
+  deploy-qa:
+    name: 🚀 Deploy to QA
+    runs-on: ubuntu-latest
+    needs: approve-qa
+    if: github.ref == 'refs/heads/qa'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Azure CLI Login (QA)
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_ACCESS_KEY_STAGING }}
+
+      - name: Upload to QA Blob Storage
+        run: |
+          az storage blob upload-batch -d '$web' -s . \
+          --account-name <qa-storage-account> \
+          --auth-mode key
+
+  approve-prod:
+    name: ✅ Request Production Deployment Approval
+    needs: deploy-qa
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://portal.azure.com/
+    steps:
+      - name: Wait for Production Deployment Approval
+        run: echo "Production deployment approval required. Approve via GitHub Actions."
+
+  deploy-prod:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: approve-prod
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Azure CLI Login (Prod)
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_ACCESS_KEY_PROD }}
+
+      - name: Upload to Production Blob Storage
+        run: |
+          az storage blob upload-batch -d '$web' -s . \
+          --account-name <prod-storage-account> \
+          --auth-mode key
