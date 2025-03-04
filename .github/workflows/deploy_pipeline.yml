@@ -20,7 +20,8 @@ jobs:
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstoragedev \
-          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_DEV }}"
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_DEV }}" \
+          --overwrite
 
   approve-qa:
     name: ✅ Request QA Deployment Approval
@@ -45,7 +46,8 @@ jobs:
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstorageqa \
-          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_QA }}"
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_QA }}" \
+          --overwrite
 
   approve-prod:
     name: ✅ Request Production Deployment Approval
@@ -70,4 +72,5 @@ jobs:
         run: |
           az storage blob upload-batch -d '$web' -s . \
           --account-name rksstorageprod \
-          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_PROD }}"
+          --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING_PROD }}" \
+          --overwrite
