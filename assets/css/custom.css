@@ -1,6 +1,6 @@
 :root {
-  --bg: #f3f5f8;
-  --bg-deep: #e4e8ee;
+  --bg: #0f172a;
+  --bg-deep: #111827;
   --panel: #ffffff;
   --ink: #1b232b;
   --muted: #5f6a76;
@@ -19,7 +19,7 @@
 body {
   margin: 0;
   font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(120deg, #f5f7fa 0%, #edf1f5 40%, #e4e8ee 100%);
+  background: linear-gradient(135deg, #0b1220 0%, #111827 45%, #1f2937 100%);
   color: var(--ink);
   line-height: 1.65;
 }
