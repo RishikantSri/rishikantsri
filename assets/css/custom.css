@@ -1,0 +1,31 @@
+.bg-set {
+  background-color: rgba(50, 137, 152, 0.08);
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+
+.resume-section-title {
+  margin-bottom: 0.5rem;
+}
+
+.resume-timeline-item {
+  margin-bottom: 2rem;
+  border-left: 2px solid #328998;
+  padding-left: 1rem;
+}
+
+.resume-timeline-item-header {
+  margin-bottom: 1rem;
+}
+
+.resume-position-time {
+  font-style: italic;
+}
+
+body {
+  background: #f4f6f8;
+}
+
+.resume-wrapper {
+  background: transparent;
+}
